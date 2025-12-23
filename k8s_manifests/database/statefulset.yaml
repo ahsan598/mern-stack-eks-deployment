@@ -55,21 +55,20 @@ spec:
             cpu: "500m"
         # Health checks
         livenessProbe:
-          exec:
-            command:
-            - mongosh
-            - --eval
-            - "db.adminCommand('ping')"
+          tcpSocket:
+            port: 27017
           initialDelaySeconds: 30
           periodSeconds: 10
+          timeoutSeconds: 2
         readinessProbe:
           exec:
             command:
             - mongosh
             - --eval
             - "db.adminCommand('ping')"
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 5
+          timeoutSeconds: 5
   volumeClaimTemplates:
   - metadata:
       name: mongodb-storage
