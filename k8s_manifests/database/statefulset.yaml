@@ -26,10 +26,10 @@ spec:
           name: mongodb
         command:
         - "mongod"
+        - "--auth"
         - "--wiredTigerCacheSizeGB"
         - "0.25"
-        - "--bind_ip"
-        - "0.0.0.0"
+        - "--bind_ip_all"
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
