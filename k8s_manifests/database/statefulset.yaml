@@ -31,12 +31,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: username
+              key: MONGO_USERNAME
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongo-secret
-              key: password
+              key: MONGO_PASSWORD
 
         volumeMounts:
         - name: mongodb-storage
