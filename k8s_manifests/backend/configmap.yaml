@@ -8,6 +8,6 @@ metadata:
     app: todo-backend
     env: dev
 data:
-  MONGO_CONN_STR: "mongodb://mongodb-svc:27017/todo?directConnection=true"
-  USE_DB_AUTH: "true"
+  MONGO_CONN_STR: "mongodb://$(username):$(password)@mongodb-svc:27017/todo?authSource=admin"
+  USE_DB_AUTH: "false"
   PORT: "8080"
