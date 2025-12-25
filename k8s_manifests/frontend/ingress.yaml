@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: todo-app.local
+    - host: todo.local
       http:
         paths:
         - path: /

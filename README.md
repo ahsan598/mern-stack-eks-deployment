@@ -28,17 +28,25 @@ kubectl get pvc -n dev
 ```
 
 ### Install NGINX Ingress Controller
+1. Install NGINX Ingress Controller
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 
 # Verify
 kubectl get pods -n ingress-nginx
+```
 
-# Add Host Entry (Local Machine)
-127.0.0.1   todo-app.local
+2. Add Host Entry (Local Machine)
+```sh
+127.0.0.1   todo.local
+```
+Add to:
+- Linux/Mac → `/etc/hosts`
+- Windows → `C:\Windows\System32\drivers\etc\hosts`
 
-# Then open
-http://todo-app.local
+3. Then open
+```sh
+http://todo.local
 ```
 
 ### Verfifcation Commands
