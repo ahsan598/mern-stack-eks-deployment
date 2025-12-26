@@ -1,11 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: '/api/tasks',
   timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  headers: { 'Content-Type': 'application/json' }
 });
 
 // Get all tasks
