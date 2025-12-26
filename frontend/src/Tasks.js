@@ -32,7 +32,6 @@ class Tasks {
       await addTask({ task: currentTask });
       this.component.setState({ currentTask: '' });
 
-      // 🔁 Always re-sync from backend
       await this.loadTasks();
     } catch (error) {
       console.error(error);
