@@ -1,89 +1,70 @@
-import { Component } from 'react';
 import { getTasks, addTask, updateTask, deleteTask } from './services/taskServices';
 
-class Tasks extends Component {
-  state = { tasks: [], currentTask: '' };
+class Tasks {
+  constructor(component) {
+    this.component = component;
+  }
 
-  async componentDidMount() {
+  async loadTasks() {
     try {
       const { data } = await getTasks();
-      this.setState({ tasks: data });
-    } catch (err) {
-      console.error(err);
+      this.component.setState({ tasks: data });
+    } catch (error) {
+      console.error(error);
     }
   }
 
   handleChange = (e) => {
-    this.setState({ currentTask: e.target.value });
+    this.component.setState({ currentTask: e.target.value });
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    if (!this.state.currentTask.trim()) return;
+
+    const { currentTask } = this.component.state;
 
     try {
-      const { data } = await addTask({ task: this.state.currentTask });
-      this.setState({
-        tasks: [...this.state.tasks, data],
-        currentTask: ''
-      });
-    } catch (err) {
-      console.error(err);
+      await addTask({ task: currentTask });
+      this.component.setState({ currentTask: '' });
+
+      await this.loadTasks();
+    } catch (error) {
+      console.error(error);
     }
   };
 
+
   handleUpdate = async (id) => {
-    const original = [...this.state.tasks];
+    const originalTasks = [...this.component.state.tasks];
+
     try {
-      const tasks = original.map(t =>
-        t._id === id ? { ...t, completed: !t.completed } : t
+      const tasks = originalTasks.map(task =>
+        task._id === id ? { ...task, completed: !task.completed } : task
       );
-      this.setState({ tasks });
-      const updated = tasks.find(t => t._id === id);
-      await updateTask(id, { completed: updated.completed });
-    } catch (err) {
-      this.setState({ tasks: original });
-      console.error(err);
+
+      this.component.setState({ tasks });
+
+      const updatedTask = tasks.find(task => task._id === id);
+      await updateTask(id, { completed: updatedTask.completed });
+
+    } catch (error) {
+      this.component.setState({ tasks: originalTasks });
+      console.error(error);
     }
   };
 
   handleDelete = async (id) => {
-    const original = [...this.state.tasks];
+    const originalTasks = [...this.component.state.tasks];
+
     try {
-      this.setState({ tasks: original.filter(t => t._id !== id) });
+      const tasks = originalTasks.filter(task => task._id !== id);
+      this.component.setState({ tasks });
       await deleteTask(id);
-    } catch (err) {
-      this.setState({ tasks: original });
-      console.error(err);
+    } catch (error) {
+      this.component.setState({ tasks: originalTasks });
+      console.error(error);
     }
   };
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            value={this.state.currentTask}
-            onChange={this.handleChange}
-            placeholder="Add task"
-          />
-          <button type="submit">Add</button>
-        </form>
-
-        {this.state.tasks.map(task => (
-          <div key={task._id}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => this.handleUpdate(task._id)}
-            />
-            {task.task}
-            <button onClick={() => this.handleDelete(task._id)}>Delete</button>
-          </div>
-        ))}
-      </div>
-    );
-  }
 }
 
 export default Tasks;
