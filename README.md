@@ -38,6 +38,18 @@ The goal is to provide a hands-on reference implementation for building and depl
 ### ⚙️ Architect Diagram
 ![architect](/assets/images/architect-diagram.png)
 
+| Component                 | Short Name | Purpose                                                                                          |
+| ------------------------- | ---------- | ------------------------------------------------------------------------------------------------ |
+| **Ingress**               | `ing`      | Entry point for external traffic. Routes requests to internal services based on host/path rules. |
+| **Service**               | `svc`      | Provides a stable network endpoint and load balances traffic to Pods.                            |
+| **Deployment**            | `deploy`   | Manages stateless application Pods (frontend and backend). Handles scaling and rolling updates.  |
+| **ReplicaSet**            | `rs`       | Ensures the correct number of Pod replicas are running. Managed automatically by Deployments.    |
+| **Pod**                   | `po`       | Smallest deployable unit in Kubernetes. Runs one or more containers.                             |
+| **ConfigMap**             | `cm`       | Stores non-sensitive configuration data used by applications.                                    |
+| **StatefulSet**           | `sts`      | Manages stateful applications like databases with stable identity and persistent storage.        |
+| **Secret**                | `sec`      | Stores sensitive information such as passwords and credentials securely.                         |
+| **PersistentVolume**      | `pv`       | Represents storage resources in the cluster.                                                     |
+| **PersistentVolumeClaim** | `pvc`      | Requests storage from a PersistentVolume and attaches it to Pods.                                |
 
 
 ### 🧪 Local Testing (Before Kubernetes)
@@ -354,3 +366,8 @@ This project is a practical reference for learning **Docker + Kubernetes** by de
 - [React Documentation](https://react.dev/)
 - [KIND Guide](https://kind.sigs.k8s.io/)
 - [Minikube Guide](https://minikube.sigs.k8s.io/docs/start/)
+
+
+
+
+
