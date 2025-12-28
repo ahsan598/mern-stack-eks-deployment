@@ -25,7 +25,7 @@ spec:
         command:
           - "mongod"
           - "--bind_ip"
-          - "auth"
+          - "0.0.0.0"
         ports:
         - name: mongodb
           containerPort: 27017
