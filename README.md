@@ -44,11 +44,17 @@ cd mern-stack-deployment-on-kubernetes
 # Build and start all services
 docker compose up --build -d
 
-# # Check logs
+# Check logs
 docker compose logs -f
 
 # Verify containers are running
 docker compose ps
+
+# Rebuild all (optional)
+docker compose build --no-cache
+
+# Start fresh (optional)
+docker compose up -d
 ```
 
 **Step 3: Test Application**
