@@ -22,12 +22,11 @@ spec:
       - name: mongodb
         image: mongo:8.0
         imagePullPolicy: IfNotPresent
-        command:
-            - "mongod"
-            - "--auth"   
-            - "--wiredTigerCacheSizeGB"
-            - "0.25"
-            - "--bind_ip_all"
+        args:
+          - "--auth"
+          - "--wiredTigerCacheSizeGB"
+          - "0.25"
+          - "--bind_ip_all"
         ports:
         - name: mongodb
           containerPort: 27017
