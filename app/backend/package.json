@@ -7,22 +7,24 @@
   "private": true,
 
   "engines": {
-    "node": ">=18"
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
   },
 
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"No tests configured\""
+    "dev": "node --watch index.js",
+    "test": "echo \"No tests configured\" && exit 1"
   },
-  "keywords": ["nodejs", "express", "mongodb", "todo", "api"],
+
+  "keywords": ["nodejs", "express", "mongodb", "todo", "api", "rest"],
   "license": "MIT",
 
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mongoose": "^9.0.1",
-    "dotenv": "^16.4.1"
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

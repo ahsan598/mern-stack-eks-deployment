@@ -1,56 +1,9 @@
-# ===============================
-# Node dependencies & logs
-# ===============================
 node_modules
 npm-debug.log
-pnpm-lock.yaml
-logs
-*.log
-
-# ===============================
-# Git / version control
-# ===============================
+.env
 .git
 .gitignore
-
-# ===============================
-# Environment files (SECRETS!)
-# ===============================
-.env
-.env.*
-
-# ===============================
-# Tests & coverage
-# ===============================
-.nyc_output
-coverage
-__tests__
-test-results
-
-# ===============================
-# IDE & editor files
-# ===============================
-.vscode
-.idea
-*.swp
-*.swo
-
-# ===============================
-# OS system files
-# ===============================
+Dockerfile
+docker-compose.yml
 .DS_Store
-Thumbs.db
-
-# ===============================
-# Build & temp artifacts
-# ===============================
-dist
-build
-.tmp
-.cache
-
-# ===============================
-# Documentation
-# ===============================
 README.md
-docs

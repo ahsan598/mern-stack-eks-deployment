@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-module.exports = async () => {
+const connection = async () => {
     try {
         const connectionParams = {};
         
-        const useDBAuth = process.env.USE_DB_AUTH || false;
+        const useDBAuth = process.env.USE_DB_AUTH === 'true';
         if(useDBAuth){
             connectionParams.user = process.env.MONGO_USERNAME;
             connectionParams.pass = process.env.MONGO_PASSWORD;
@@ -19,3 +19,5 @@ module.exports = async () => {
         console.log("Could not connect to database.", error);
     }
 };
+
+export default connection;

@@ -18,10 +18,10 @@ RUN npm ci --only=production
 FROM node:24-alpine
 WORKDIR /app
 
-# Run as non-root user (node user exists in alpine)
+# Non-root user setup (Node image has a 'node' user by default)
 USER node
 
-# Copy only necessary files from builder (--chown=node:node ensures the node user owns the files)
+# Copy only necessary artifacts from builder stage (--chown=node:node ensures the node user owns the files)
 COPY --from=builder --chown=node:node /app/node_modules ./node_modules
 COPY --chown=node:node . .
 
