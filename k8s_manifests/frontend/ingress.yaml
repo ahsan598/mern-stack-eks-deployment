@@ -12,6 +12,17 @@ spec:
     - host: todo.local
       http:
         paths:
+
+        # 1. Backend API (Must be listed FIRST or used with specific path)
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: backend-svc
+              port:
+                number: 8080
+
+        # 2. Frontend App (Matches everything else)
         - path: /
           pathType: Prefix
           backend:
