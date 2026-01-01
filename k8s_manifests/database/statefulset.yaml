@@ -23,8 +23,6 @@ spec:
         image: mongo:8.0
         imagePullPolicy: IfNotPresent
         command:
-            - "numactl"
-            - "--interleave=all"
             - "mongod"
             - "--auth"   
             - "--wiredTigerCacheSizeGB"
