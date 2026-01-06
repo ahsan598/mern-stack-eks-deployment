@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the application's dependencies inside the container
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # ======================================================
 # Stage 2: Final Stage
