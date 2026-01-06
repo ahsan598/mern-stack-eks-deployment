@@ -1,18 +1,12 @@
-# MERN Todo App - AWS EKS Deployment
+# <img src="https://your-repo-path/eks-cloud.svg" width="32" alt="AWS EKS Icon" /> MERN Todo App - AWS EKS Deployment
 
-A production-ready MERN stack application deployed on **AWS EKS (Elastic Kubernetes Service)** with container images stored in **AWS ECR** and exposed via **AWS Application Load Balancer**.
 
-### 🎯 Overview
+### 🎯 Project Overview
+This project is a **full-stack MERN (MongoDB, Express, React, Node.js) Todo application** that is deployed on **AWS EKS (Elastic Kubernetes Service)** using modern DevOps and cloud-native practices.
 
-This project demonstrates real-world cloud-native deployment practices including:
-- **Dockerizing** React frontend and Node.js backend
-- Running **MongoDB** with persistent storage on Kubernetes
-- Deploying to **AWS EKS** with proper networking
-- Using **ConfigMaps and Secrets** for configuration
-- Exposing the application using **AWS ALB with Ingress Controller**
-- Container image management via **AWS ECR**
-- Persistent storage using **AWS EBS CSI Driver**
+It is designed to help beginners understand how a real production-style application is built, containerized, and deployed on the cloud.
 
+---
 
 ### 🛠️ Prerequisites
 
@@ -49,6 +43,7 @@ Access the app at http://localhost:3000
 docker compose down -v
 ```
 
+---
 
 ### 📦 Build and Push Images to AWS ECR
 
@@ -70,6 +65,7 @@ aws ecr get-login-password --region us-east-1 | \
 ```
 
 **Step-3: Build and Push Images**
+
 **1. Backend**
 ```sh
 # Build
@@ -146,6 +142,7 @@ kubectl get pods -n kube-system | grep ebs-csi
 
 
 **Step-4: Setup AWS Load Balancer Controller**
+
 **a. Enable OIDC Provider**
 ```sh
 eksctl utils associate-iam-oidc-provider --cluster mern-cluster --approve
@@ -192,6 +189,7 @@ kubectl get deployment -n kube-system aws-load-balancer-controller
 ```
 
 **Step-5: Update Image References**
+
 Before applying manifests, update the image URLs in your deployment files:
 ```sh
 # Example: k8s_manifests/backend/deployment.yaml & frontend/deployment.yaml
@@ -235,7 +233,7 @@ kubectl logs -f deployment/backend -n todo-lab
 # Deploy React app
 kubectl apply -f k8s_manifests/frontend/
 ```
-**Important:** Ensure your frontend and backend services are **ClusterIP** type (internal only):
+**Important:** Ensure your frontend and backend services are **ClusterIP** type
 
 **Step-10: Deploy Ingress**
 ```sh
@@ -277,39 +275,40 @@ kubectl get ep -n todo-lab
 ![verify](/assets/deployment-verify.png)
 ![eks-workloads](/assets/workloads.png)
 
-### 🗑️ Cleanup
+### 🗑️ Cleanup Resources
 
-1. Delete Application Resources
+**1. Delete Application Resources**
 ```sh
 # Delete namespace (removes all app resources)
 kubectl delete namespace todo-lab
 ```
 
-2. Delete Load Balancer Controller
+**2. Delete Load Balancer Controller**
 ```sh
 helm uninstall aws-load-balancer-controller -n kube-system
 ```
 
-3. Delete EKS Cluster
+**3. Delete EKS Cluster**
 ```sh
 eksctl delete cluster --name mern-cluster --region us-east-1
 ```
 This will delete all associated AWS resources (VPC, subnets, Load Balancers, etc.).
 
-4. Delete ECR Repositories
+**4. Delete ECR Repositories**
 ```sh
 aws ecr delete-repository --repository-name mern-backend --region us-east-1 --force
 aws ecr delete-repository --repository-name mern-frontend --region us-east-1 --force
 ```
 
 ### 🧾 Summary
-This project deploys a full MERN stack on AWS EKS with:
-- React frontend served via NGINX
-- Node.js/Express REST API backend
-- MongoDB with persistent storage (AWS EBS volumes)
-- Container images hosted in AWS ECR
-- External access via AWS Application Load Balancer
-- 
+This setup shows how modern cloud-native applications are built, deployed, and managed at scale.
+- Dockerize a **React frontend** and a **Node.js backend**
+- Store container images securely in **AWS ECR**
+- Run your application on **AWS EKS (Kubernetes)**
+- Deploy **MongoDB** with persistent storage using **AWS EBS**
+- Manage configuration using **ConfigMaps and Secrets**
+- Expose the application to the internet using **AWS Application Load Balancer (ALB) and Kubernetes Ingress**
+- Handle persistent data using **AWS EBS CSI Driver**
 
 
 ### 📚 References
