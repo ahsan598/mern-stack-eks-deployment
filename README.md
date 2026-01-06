@@ -45,7 +45,7 @@ docker compose down -v
 
 ---
 
-### 📦 Build and Push Images to AWS ECR
+### Now Deploy Application to AWS EKS
 
 **Step-1: Create ECR Repositories**
 ```sh
@@ -64,7 +64,7 @@ aws ecr get-login-password --region us-east-1 | \
   docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
 ```
 
-**Step-3: Build and Push Images**
+**Step-3: Build and Push Images to AWS ECR**
 
 **1. Backend**
 ```sh
