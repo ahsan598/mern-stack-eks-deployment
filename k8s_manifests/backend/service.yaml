@@ -8,7 +8,6 @@ metadata:
     app: todo-backend
     env: dev
 spec:
-  type: ClusterIP
   selector:
     app: todo-backend
   ports:

@@ -8,7 +8,7 @@ metadata:
     app: mongodb
     env: dev
 spec:
-  clusterIP: None                 # Headless service
+  clusterIP: None
   selector:
     app: mongodb
   ports:

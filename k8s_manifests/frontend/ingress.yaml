@@ -1,16 +1,17 @@
-# Frontend Ingress
+# Frontend + Backend Ingress (LAB - AWS ALB)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: local-ingress
+  name: lab-ingress
   namespace: todo-lab
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
-    - host: todo.local
-      http:
+    - http:
         paths:
 
         # Backend API (Must be listed FIRST or used with specific path)

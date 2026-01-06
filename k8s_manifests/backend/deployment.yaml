@@ -24,11 +24,11 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ahsan98/mernapp:backend
+        image: 148761661491.dkr.ecr.us-east-1.amazonaws.com/mern-backend:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - name: backend-port
-          containerPort: 8080         # Port matching index.js
+          containerPort: 8080
 
         env:
         - name: MONGO_USERNAME_RAW
