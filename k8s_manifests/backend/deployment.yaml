@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: 148761661491.dkr.ecr.us-east-1.amazonaws.com/mern-backend:1.0
+        image: 148761661491.dkr.ecr.us-east-1.amazonaws.com/mern-backend:2.0
         imagePullPolicy: IfNotPresent
         ports:
         - name: backend-port
