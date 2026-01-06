@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/aws/eks-charts/master/docs/logo/amazon-eks.png" width="32" alt="EKS" /> MERN Todo App - AWS EKS Deployment
+# <img src="https://raw.githubusercontent.com/aws/eks-charts/master/docs/logo/amazon-eks.png" width="40" alt="EKS" /> MERN Todo App - AWS EKS Deployment
 
 
 ### 🎯 Project Overview
