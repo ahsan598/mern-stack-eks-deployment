@@ -27,7 +27,7 @@ It is designed to help beginners understand how a real production-style applicat
 - Configured AWS credentials (`aws configure`)
 
 
-### 🧪 Local Testing (Docker Compose)
+### 🔧 Local Testing (Docker Compose)
 Before deploying to EKS, verify the application works locally.
 ```sh
 # Build and start all services
@@ -44,7 +44,7 @@ docker compose down -v
 
 ---
 
-### Now Deploy Application to AWS EKS
+### 📦 ECR Repositories to store docker images
 
 **Step-1: Create ECR Repositories**
 ```sh
@@ -98,7 +98,7 @@ aws ecr list-images --repository-name mern-frontend --region us-east-1
 ```
 
 
-### 🚀 Deploy to AWS EKS
+### 🚀 Now Deploy Application to AWS EKS
 
 **Step-1: Create EKS Cluster**
 ```sh
