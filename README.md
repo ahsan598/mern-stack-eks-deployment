@@ -6,6 +6,9 @@ This project is a **full-stack MERN (MongoDB, Express, React, Node.js) Todo appl
 
 It is designed to help beginners understand how a real production-style application is built, containerized, and deployed on the cloud.
 
+### ⚙️ Architect Diagram
+![architect](/assets/architect-diagram.png)
+
 ---
 
 ### 🛠️ Prerequisites
@@ -22,10 +25,6 @@ It is designed to help beginners understand how a real production-style applicat
 **AWS Account Requirements:**
 - Valid AWS account with appropriate IAM permissions
 - Configured AWS credentials (`aws configure`)
-
-
-### ⚙️ Architect Diagram
-![architect](/assets/architect-diagram.png)
 
 
 ### 🧪 Local Testing (Docker Compose)
@@ -241,21 +240,7 @@ kubectl apply -f k8s_manifests/frontend/
 kubectl apply -f k8s_manifests/ingress.yaml
 ```
 
-**Step-11: Get Application URL**
-```sh
-# Wait for ALB to provision (takes 3-5 minutes)
-kubectl get ingress lab-ingress -n todo-lab -w
-
-# Get the ALB DNS name
-kubectl get ingress lab-ingress -n todo-lab -o jsonpath='{.status.loadBalancer.ingress.hostname}'
-
-#Copy the ALB DNS name and open it in your browser!
-```
-
-![output](/assets/browsing-verify.png)
-
-
-### Verify All Resources
+**Step-11: Verify All Resources**
 ```sh
 # Check all resources
 kubectl get all -n todo-lab
@@ -272,8 +257,22 @@ Go to: EC2 → Load Balancers → Find your ALB
 # Check service endpoints
 kubectl get ep -n todo-lab
 ```
-![verify](/assets/deployment-verify.png)
 ![eks-workloads](/assets/workloads.png)
+
+
+**Step-12: Get Application URL**
+```sh
+# Wait for ALB to provision (takes 3-5 minutes)
+kubectl get ingress lab-ingress -n todo-lab -w
+
+# Get the ALB DNS name
+kubectl get ingress lab-ingress -n todo-lab -o jsonpath='{.status.loadBalancer.ingress.hostname}'
+
+# Copy the ALB DNS name and open it in your browser!
+```
+![output](/assets/browsing-verify.png)
+
+---
 
 ### 🗑️ Cleanup Resources
 
@@ -299,6 +298,8 @@ This will delete all associated AWS resources (VPC, subnets, Load Balancers, etc
 aws ecr delete-repository --repository-name mern-backend --region us-east-1 --force
 aws ecr delete-repository --repository-name mern-frontend --region us-east-1 --force
 ```
+
+---
 
 ### 🧾 Summary
 This setup shows how modern cloud-native applications are built, deployed, and managed at scale.
