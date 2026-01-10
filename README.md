@@ -1,18 +1,19 @@
-# <img src="https://raw.githubusercontent.com/aws/eks-charts/master/docs/logo/amazon-eks.png" width="40" alt="EKS" /> MERN Todo App - AWS EKS Deployment
+# MERN Todo App - AWS EKS Deployment
 
 
 ### 🎯 Project Overview
-This project is a **full-stack MERN (MongoDB, Express, React, Node.js) Todo application** that is deployed on **AWS EKS (Elastic Kubernetes Service)** using modern DevOps and cloud-native practices.
+
+This project is a full-stack **MERN (MongoDB, Express, React, Node.js) ToDo Web application** that is deployed on **AWS EKS (Elastic Kubernetes Service)** using DevOps and cloud-native practices.
 
 It is designed to help beginners understand how a real production-style application is built, containerized, and deployed on the cloud.
 
 ### ⚙️ Architect Diagram
 ![architect](/assets/architect-diagram.png)
 
----
 
 ### 🛠️ Prerequisites
 
+Before you start, make sure you have installed:
 | Tool | Purpose | Documentation |
 |------|---------|---------------|
 | **AWS CLI** | Interact with AWS services from command line | [Install AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) |
@@ -36,7 +37,7 @@ docker compose up --build -d
 # Verify containers are running
 docker compose ps
 
-Access the app at http://localhost:3000
+# Access the app in your browser http://localhost:3000
 
 # Stop and cleanup
 docker compose down -v
@@ -44,7 +45,7 @@ docker compose down -v
 
 ---
 
-### 📦 ECR Repositories to store docker images
+### 🚀 Let's deploy it on AWS EKS
 
 **Step-1: Create ECR Repositories**
 ```sh
@@ -98,7 +99,7 @@ aws ecr list-images --repository-name mern-frontend --region us-east-1
 ```
 
 
-### 🚀 Now Deploy Application to AWS EKS
+### 🚀 Now create AWS EKS Cluster
 
 **Step-1: Create EKS Cluster**
 ```sh
@@ -115,7 +116,7 @@ eksctl create cluster \
 
 ![eks-cluster](/assets/eks-cluster.png)
 
-**Step-2: Configure kubectl**
+**Step-2: Configure Kubectl**
 ```sh
 # Update kubeconfig to connect to your cluster
 aws eks update-kubeconfig --region us-east-1 --name mern-cluster
@@ -166,7 +167,7 @@ eksctl create iamserviceaccount \
   --cluster mern-cluster \
   --namespace kube-system \
   --name aws-load-balancer-controller \
-  --attach-policy-arn <PASTE-POLICY-ARN-HERE> \
+  --attach-policy-arn <POLICY-ARN> \
   --approve
 ```
 
@@ -232,12 +233,18 @@ kubectl logs -f deployment/backend -n todo-lab
 # Deploy React app
 kubectl apply -f k8s_manifests/frontend/
 ```
-**Important:** Ensure your frontend and backend services are **ClusterIP** type
+**Important:** Ensure your frontend and backend services are **ClusterIP** types
 
 **Step-10: Deploy Ingress**
 ```sh
 # Apply Ingress manifest
 kubectl apply -f k8s_manifests/ingress.yaml
+
+# Wait for ALB to provision (takes 3-5 minutes)
+kubectl get ingress lab-ingress -n todo-lab -w
+
+# Check Ingress status
+kubectl describe ingress lab-ingress -n todo-lab
 ```
 
 **Step-11: Verify All Resources**
@@ -248,11 +255,8 @@ kubectl get all -n todo-lab
 # Check persistent volumes
 kubectl get pvc -n todo-lab
 
-# Check Ingress status
-kubectl describe ingress lab-ingress -n todo-lab
-
-# Check ALB in AWS Console
-Go to: EC2 → Load Balancers → Find your ALB
+# Check Ingress
+kubectl get ingress lab-ingress -n todo-lab
 
 # Check service endpoints
 kubectl get ep -n todo-lab
@@ -262,10 +266,10 @@ kubectl get ep -n todo-lab
 
 **Step-12: Get Application URL**
 ```sh
-# Wait for ALB to provision (takes 3-5 minutes)
-kubectl get ingress lab-ingress -n todo-lab -w
+# Get the ALB DNS name in AWS Console
+Go to: EC2 → Load Balancers → Find your ALB -> Copy ALB DNS name
 
-# Get the ALB DNS name
+# Get the ALB DNS name in console
 kubectl get ingress lab-ingress -n todo-lab -o jsonpath='{.status.loadBalancer.ingress.hostname}'
 
 # Copy the ALB DNS name and open it in your browser!
