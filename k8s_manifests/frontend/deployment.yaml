@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 148761661491.dkr.ecr.us-east-1.amazonaws.com/mern-frontend:2.0
+        image: <aws-account-id>.dkr.ecr.us-east-1.amazonaws.com/mern-frontend:2.0
         imagePullPolicy: IfNotPresent
         ports:
         - name: frontend-port
