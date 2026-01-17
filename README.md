@@ -210,10 +210,10 @@ kubectl apply -f k8s_manifests/namespace.yaml
 kubectl apply -f k8s_manifests/database/
 
 # Verify MongoDB is running
-kubectl get pods -n todo-lab
+kubectl get pods -n dev
 
 # Test MongoDB connection
-kubectl exec -it mongodb-0 -n todo-lab -- mongosh -u admin -p password123 --authenticationDatabase admin
+kubectl exec -it mongodb-0 -n dev -- mongosh -u admin -p password123 --authenticationDatabase admin
 ```
 ![db-verify](/assets/db-connection-verify.png)
 
@@ -224,7 +224,7 @@ kubectl exec -it mongodb-0 -n todo-lab -- mongosh -u admin -p password123 --auth
 kubectl apply -f k8s_manifests/backend/
 
 # Check logs
-kubectl logs -f deployment/backend -n todo-lab
+kubectl logs -f deployment/backend -n dev
 ```
 ![backend-verify](/assets/connection-verify.png)
 
@@ -241,25 +241,25 @@ kubectl apply -f k8s_manifests/frontend/
 kubectl apply -f k8s_manifests/ingress.yaml
 
 # Wait for ALB to provision (takes 3-5 minutes)
-kubectl get ingress lab-ingress -n todo-lab -w
+kubectl get ingress todo-ingress -n dev -w
 
 # Check Ingress status
-kubectl describe ingress lab-ingress -n todo-lab
+kubectl describe ingress todo-ingress -n dev
 ```
 
 **Step-11: Verify All Resources**
 ```sh
 # Check all resources
-kubectl get all -n todo-lab
+kubectl get all -n dev
 
 # Check persistent volumes
-kubectl get pvc -n todo-lab
+kubectl get pvc -n dev
 
 # Check Ingress
-kubectl get ingress lab-ingress -n todo-lab
+kubectl get ingress todo-ingress -n dev
 
 # Check service endpoints
-kubectl get ep -n todo-lab
+kubectl get ep -n dev
 ```
 ![eks-workloads](/assets/workloads.png)
 
@@ -270,7 +270,7 @@ kubectl get ep -n todo-lab
 Go to: EC2 → Load Balancers → Find your ALB -> Copy ALB DNS name
 
 # Get the ALB DNS name in console
-kubectl get ingress lab-ingress -n todo-lab -o jsonpath='{.status.loadBalancer.ingress.hostname}'
+kubectl get ingress todo-ingress -n dev -o jsonpath='{.status.loadBalancer.ingress.hostname}'
 
 # Copy the ALB DNS name and open it in your browser!
 ```
@@ -283,7 +283,7 @@ kubectl get ingress lab-ingress -n todo-lab -o jsonpath='{.status.loadBalancer.i
 **1. Delete Application Resources**
 ```sh
 # Delete namespace (removes all app resources)
-kubectl delete namespace todo-lab
+kubectl delete namespace dev
 ```
 
 **2. Delete Load Balancer Controller**
