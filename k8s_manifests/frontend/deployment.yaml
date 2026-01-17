@@ -3,10 +3,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: todo-lab
+  namespace: dev
   labels:
     app: todo-frontend
-    env: dev
+ 
 spec:
   replicas: 2
   strategy:
@@ -21,14 +21,14 @@ spec:
     metadata:
       labels:
         app: todo-frontend
+
     spec:
       containers:
       - name: frontend
         image: <aws-account-id>.dkr.ecr.us-east-1.amazonaws.com/mern-frontend:2.0
         imagePullPolicy: IfNotPresent
         ports:
-        - name: frontend-port
-          containerPort: 80
+        - containerPort: 80
 
         volumeMounts:
         - name: nginx-config
@@ -39,13 +39,13 @@ spec:
           httpGet:
             path: /health
             port: frontend-port
-          initialDelaySeconds: 10
+          initialDelaySeconds: 15
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /health
             port: frontend-port
-          initialDelaySeconds: 5
+          initialDelaySeconds: 10
           periodSeconds: 5
 
         resources:

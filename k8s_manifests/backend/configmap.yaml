@@ -3,11 +3,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: backend-config
-  namespace: todo-lab
+  namespace: dev
   labels:
-    app: todo-backend
-    env: dev
+    app: todo-backend  
 data:
-  MONGO_HOST: "mongodb-svc" 
+  MONGO_HOST: "mongodb-svc.dev.svc.cluster.local" 
   USE_DB_AUTH: "true"
   PORT: "8080"  

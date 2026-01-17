@@ -2,11 +2,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
-  namespace: todo-lab
+  name: backend-deploy
+  namespace: dev
   labels:
     app: todo-backend
-    env: dev
+
 spec:
   replicas: 2
   strategy:
@@ -21,25 +21,25 @@ spec:
     metadata:
       labels:
         app: todo-backend
+
     spec:
       containers:
-      - name: backend
+      - name: backend-app
         image: <aws-account-id>.dkr.ecr.us-east-1.amazonaws.com/mern-backend:2.0
         imagePullPolicy: IfNotPresent
         ports:
-        - name: backend-port
-          containerPort: 8080
+        - containerPort: 8080
 
         env:
         - name: MONGO_USERNAME_RAW
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
+              name: mongodb-secret
               key: MONGO_USERNAME
         - name: MONGO_PASSWORD_RAW
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
+              name: mongodb-secret
               key: MONGO_PASSWORD
 
         - name: MONGO_HOST
@@ -66,13 +66,13 @@ spec:
             path: /ok
             port: backend-port
           initialDelaySeconds: 30
-          periodSeconds: 10
+          periodSeconds: 20
         readinessProbe:
           httpGet:
             path: /ok
             port: backend-port
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 15
+          periodSeconds: 10
 
         resources:
           requests:

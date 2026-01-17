@@ -1,19 +1,25 @@
-# Frontend + Backend Ingress (LAB - AWS ALB)
+# Frontend + Backend Ingress (AWS ALB)
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: lab-ingress
-  namespace: todo-lab
+  name: todo-ingress
+  namespace: dev
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
-    alb.ingress.kubernetes.io/group.name: todo-lab
+    alb.ingress.kubernetes.io/group.name: "todo-group"
+
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/success-codes: "200"
+    alb.ingress.kubernetes.io/idle-timeout: "120"
+
 spec:
   ingressClassName: alb
   rules:
-    - http:
-        paths:
+  - host: todo.example.com
+    http:
+      paths:
 
         # Backend API (Must be listed FIRST or used with specific path)
         - path: /api

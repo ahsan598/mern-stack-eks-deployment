@@ -3,20 +3,21 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mongodb
-  namespace: todo-lab
+  namespace: dev
   labels:
-    app: mongodb
-    env: dev
+    app: mongo-db
+
 spec:
   serviceName: mongodb-svc
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: mongo-db
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mongo-db
+
     spec:
       containers:
       - name: mongodb
@@ -28,52 +29,51 @@ spec:
           - "0.25"
           - "--bind_ip_all"
         ports:
-        - name: mongodb
-          containerPort: 27017
+        - containerPort: 27017
 
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
+              name: mongodb-secret
               key: MONGO_USERNAME
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mongo-secret
+              name: mongodb-secret
               key: MONGO_PASSWORD
         
         # Database name for initialization
         - name: MONGO_INITDB_DATABASE
-          value: "todo"
+          value: "todo-app-db"
 
         volumeMounts:
-        - name: mongodb-storage
+        - name: mongodb-data
           mountPath: /data/db
           subPath: mongodb
 
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
+            memory: "768Mi"
             cpu: "500m"
+          limits:
+            memory: "1500Mi"
+            cpu: "1000m"
 
         livenessProbe:
           tcpSocket:
             port: 27017
           initialDelaySeconds: 30
-          periodSeconds: 10
+          periodSeconds: 20
         readinessProbe:
           tcpSocket:
             port: 27017
-          initialDelaySeconds: 10
-          periodSeconds: 5
+          initialDelaySeconds: 20
+          periodSeconds: 15
 
-  volumeClaimTemplates:
+volumeClaimTemplates:
   - metadata:
-      name: mongodb-storage
+      name: mongodb-data
     spec:
       accessModes: ["ReadWriteOnce"]
       storageClassName: gp2
